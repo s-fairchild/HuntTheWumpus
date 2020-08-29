@@ -4,7 +4,6 @@
 **August 29, 2020**
 
 
-## Use Case Name: Start the game
 **Actors:**
 * Player
 * Website
@@ -19,7 +18,7 @@
 * Hunt the Wumpus game system has been setup on the website.
 
 **Post-Condition**
-* The player has completed the game and exited the application.
+* The player has completed the game.
 
 **Normal Flow**
 
@@ -30,28 +29,10 @@
 1. The website will display an option to start the game.  
 1. The player will click on "start the game" button.  
 1. The system will render and a new game begins.
-
-## Use Case Name: play the game
-**Actors:**
-* Player
-* Website
-* System
-
-**Triggers:**
-* The player is on the website and has clicked "start the game" button.
-
-**Precondition**
-* The system is running.
-
-**Post-Condition**
-* The system stops running.
-
-**Normal Flow**
-
 1. The system will render a space that represents the map of the game. 
 1. The system will partition the map into grids that represent caverns of the map.
 1. The system will render an object in a cavern that represents the player's character.
-1. The player will move his character to adjective grid.
+1. The player will move the character to adjacent grid.
 1. The system will render character's updated location.
 1. The system will display clue when player move into specific caverns.
 1. The player will gather clues to find the Wumpus.  
