@@ -42,12 +42,3 @@
 1. The system will display "you win" if player has won, else display Wumpus eating player's character.
 1. The system will reveal the map and all objects in the map. 
 1. The system stops running. 
- 
-
-
-
-
-
-
-
-
