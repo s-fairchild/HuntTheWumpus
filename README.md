@@ -3,7 +3,7 @@
 ## Steven Fairchild 
   - steve51516@gmail.com
 ## Tyra Oberholzer
-  - oberholt@my.erau.edu
+  - tyra.oberholzer@gmail.com
 ## Anthony Scholeno 
   - Anthony.scholeno@outlook.com
 ## James Silcott 
