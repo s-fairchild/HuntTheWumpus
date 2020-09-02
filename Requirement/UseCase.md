@@ -3,11 +3,8 @@
 
 **August 29, 2020**
 
-
-**Actors:**
+**Actor:**
 * Player
-* Website
-* System
 
 **Triggers:**
 * The player wants to play the Hunt the Wumpus game.
@@ -22,23 +19,22 @@
 
 **Normal Flow**
 
-1. The player will navigate to Hunt the Wumpus website.
-1. The website will display brief intro of the game. 
-1. The website will display rules of the game.
-1. The website will display how to play the game.
-1. The website will display an option to start the game.  
-1. The player will click on "start the game" button.  
-1. The system will render and a new game begins.
-1. The system will render a space that represents the map of the game. 
-1. The system will partition the map into grids that represent caverns of the map.
-1. The system will render an object in a cavern that represents the player's character.
-1. The player will move the character to adjacent grid.
-1. The system will render character's updated location.
-1. The system will display clue when player move into specific caverns.
-1. The player will gather clues to find the Wumpus.  
-1. The player will equip his weapon.
-1. The player will fire his weapon in a direction. 
-1. The system will display a flying arrow moving to the direction of player's choice. 
-1. The system will display "you win" if player has won, else display Wumpus eating player's character.
-1. The system will reveal the map and all objects in the map. 
-1. The system stops running. 
+1. The player will navigate to Hunt the Wumpus website. 
+1. The player will learn how to play the game from this website.
+1. The player will click on "start the game" button to start a new game session.  
+1. The player will move his/her character to an adjacent grid.
+1. The player will gather clues from the caverns.  
+1. The player will attempt to identify the cavern that contains the Wumpus.
+1. The player will be able to see all elements in map after he/she wins/loses the game.
+1. The player will be able to view a record of wins and loses of this session. 
+1. The player will select an option to either replay the game, or exit this session. 
+ 
+
+
+
+
+
+
+
+
+
