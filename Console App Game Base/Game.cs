@@ -37,7 +37,7 @@ namespace HuntTheWumpus
                 Action();
             } while (GameState == 0);
         }
-        static string PlayerPreviousLocation = "";
+        public static string PlayerPreviousLocation = "";
         public static void Update()
         {
             
@@ -47,6 +47,7 @@ namespace HuntTheWumpus
             Console.WriteLine($"you're in Cavern: {Map.PlayerCurrentLoc()}");
             PlayerPreviousLocation = Map.PlayerCurrentLoc();
             Console.Write($"{Map.CheckBlood()}\n{Map.CheckDraft()}\n");
+            Map.CheckBats(size);
         }
         public static void Action()
         {
