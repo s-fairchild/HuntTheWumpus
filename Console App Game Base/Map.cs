@@ -311,6 +311,15 @@ namespace HuntTheWumpus
         {
             return PlayerLocation = $"[{PlayerCurrentCol},{PlayerCurrentRow}]";
         }
+        public static string CheckBloodDraft()
+        {
+            if (newMap[PlayerCurrentCol, PlayerCurrentRow].Blood == true)
+                return "You see blood in this cavern";
+            else if (newMap[PlayerCurrentCol, PlayerCurrentRow].Draft == true)
+                return "You detected draft in this cavern";
+            else
+                return "";
+        }
 
 
     }

@@ -40,9 +40,10 @@ namespace HuntTheWumpus
 
         public static void Update()
         {
-            //Console.Clear();
+            Console.Clear();
             Map.printCaverns(size);
             Console.WriteLine($"you're in Cavern: {Map.PlayerCurrentLoc()}");
+            Console.WriteLine(Map.CheckBloodDraft());
         }
         public static void Action()
         {
