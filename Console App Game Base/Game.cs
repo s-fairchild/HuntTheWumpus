@@ -37,19 +37,23 @@ namespace HuntTheWumpus
                 Action();
             } while (GameState == 0);
         }
-
+        static string PlayerPreviousLocation = "";
         public static void Update()
         {
+            
             Console.Clear();
             Map.printCaverns(size);
+            Console.WriteLine($"You were in cavern: {PlayerPreviousLocation}");
             Console.WriteLine($"you're in Cavern: {Map.PlayerCurrentLoc()}");
-            Console.WriteLine(Map.CheckBloodDraft());
+            PlayerPreviousLocation = Map.PlayerCurrentLoc();
+            Console.Write($"{Map.CheckBlood()}\n{Map.CheckDraft()}\n");
         }
         public static void Action()
         {
             Console.WriteLine("Please choose your action: ");
             Console.WriteLine("1: Move " +
-                "\n2: Shoot");
+                "\n2: Shoot" +
+                "\n3: print info");
             string ActionInput = Console.ReadLine();
             switch (ActionInput)
             {
@@ -60,6 +64,12 @@ namespace HuntTheWumpus
                 case "2":
                     ShootMenu();
                     GameState = Map.Shoot(size);
+                    break;
+                case "3":
+                    Map.printINFO(size);
+                    Console.WriteLine("enter any charater to get back in action");
+                    Console.ReadLine();
+                    Update();
                     break;
                 default:
                     Console.Clear();

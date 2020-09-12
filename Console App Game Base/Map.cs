@@ -154,7 +154,7 @@ namespace HuntTheWumpus
             {
                 for (int j = 0; j < MapSize[size]; j++)
                 {
-                    if (newMap[j, i].Occupied == true | newMap[j, i].Blood == true | newMap[j,i].Draft == true | newMap[j, i].Bats == true)
+                    if (newMap[j, i].Occupied == true )
                     {
                         Console.WriteLine($"[{newMap[j, i].Column},{newMap[j, i].Row}]\nwumpus: {newMap[j, i].Wampus}\nplayer: {newMap[j, i].Player}\npit: {newMap[j, i].Pit}\nblood: {newMap[j, i].Blood}\ndraft: {newMap[j, i].Draft}\nbats: {newMap[j, i].Bats}");
                         Console.WriteLine();
@@ -224,49 +224,56 @@ namespace HuntTheWumpus
             {
                 case "1":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Occupied = false;
                     int updatedRow = PlayerCurrentRow - 1;
                     if (updatedRow < 0)
                         updatedRow = MapSize[size] - 1;
                     newMap[PlayerCurrentCol, updatedRow].Player = true;
                     PlayerCurrentRow = updatedRow;
-                    return CheckIfPlayerIsDead(size);
+                    return CheckIfCavernIsOccupied(size);
                 case "2":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Occupied = false;
+
                     updatedRow = PlayerCurrentRow + 1;
                     if (updatedRow > MapSize[size] - 1)
                         updatedRow = 0;
                     newMap[PlayerCurrentCol, updatedRow].Player = true;
                     PlayerCurrentRow = updatedRow;
-                    return CheckIfPlayerIsDead(size);
+                    return CheckIfCavernIsOccupied(size);
                 case "4":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Occupied = false;
+
                     int updatedCol = PlayerCurrentCol - 1;
                     if (updatedCol < 0)
                         updatedCol = MapSize[size] - 1;
                     newMap[updatedCol, PlayerCurrentRow].Player = true;
                     PlayerCurrentCol = updatedCol;
-                    return CheckIfPlayerIsDead(size);
+                    return CheckIfCavernIsOccupied(size);
                 case "3":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Occupied = false;
+
                     updatedCol = PlayerCurrentCol + 1;
                     if (updatedCol > MapSize[size] - 1)
                         updatedCol = 0;
                     newMap[updatedCol, PlayerCurrentRow].Player = true;
                     PlayerCurrentCol = updatedCol;
-                    return CheckIfPlayerIsDead(size);
+                    return CheckIfCavernIsOccupied(size);
                 default:
-                    return CheckIfPlayerIsDead(size);
+                    return CheckIfCavernIsOccupied(size);
             }
         }
         
-        public static int CheckIfPlayerIsDead(string size)
+        public static int CheckIfCavernIsOccupied(string size)
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Wampus == true)
                 return WumpusEatsYou();
             else if (newMap[PlayerCurrentCol, PlayerCurrentRow].Pit == true)
                 return FallInToPit();
             else if (newMap[PlayerCurrentCol, PlayerCurrentRow].Bats == true)
-                return BatsCarry(size);
+                return CheckBats(size);
             else
                 return 0;
         }
@@ -295,14 +302,19 @@ namespace HuntTheWumpus
         }
         public static int BatsCarry(string size)
         {
+            Console.WriteLine("You walked in to a group of bats");
             int batCarryChance = Loc.Next(4);
             if (batCarryChance == 2)
             {
+                
                 newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
                 int updatedCol = Loc.Next(MapSize[size]);
                 int updatedRow = Loc.Next(MapSize[size]);
                 newMap[updatedCol, updatedRow].Player = true;
-                return CheckIfPlayerIsDead(size);
+                PlayerCurrentCol = updatedCol;
+                PlayerCurrentRow = updatedRow;
+                Console.WriteLine($"The bats carries you to cavern: {PlayerCurrentLoc()}");
+                return CheckIfCavernIsOccupied(size);
             }
             else
                 return 0;
@@ -311,14 +323,26 @@ namespace HuntTheWumpus
         {
             return PlayerLocation = $"[{PlayerCurrentCol},{PlayerCurrentRow}]";
         }
-        public static string CheckBloodDraft()
+        public static string CheckBlood()
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Blood == true)
                 return "You see blood in this cavern";
-            else if (newMap[PlayerCurrentCol, PlayerCurrentRow].Draft == true)
-                return "You detected draft in this cavern";
             else
                 return "";
+        }
+        public static string CheckDraft()
+        {
+            if (newMap[PlayerCurrentCol, PlayerCurrentRow].Draft == true)
+                return "\nYou detected draft in this cavern";
+            else
+                return "";
+        }
+        public static int CheckBats(string size)
+        {
+            if (newMap[PlayerCurrentCol, PlayerCurrentRow].Bats == true)
+                return BatsCarry(size);
+            else
+                return 0;
         }
 
 
