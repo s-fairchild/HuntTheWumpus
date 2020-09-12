@@ -111,7 +111,6 @@ namespace HuntTheWumpus
         }
         public static void populateBlood(int col, int row, string size )
         {
-
             int newCol = col + 1;
             if (newCol > MapSize[size] - 1)
                 newCol = 0;
@@ -193,28 +192,28 @@ namespace HuntTheWumpus
             string direction = Console.ReadLine();
             switch (direction)
             {
-                case "n":
+                case "1":
                     int updatedRow = PlayerCurrentRow - 1;
                     if (updatedRow < 0)
                         updatedRow = MapSize[size] - 1;
-                    return CheckIfWumpasDead();
-                case "s":
+                    return CheckIfWumpasDead(PlayerCurrentCol, updatedRow);
+                case "2":
                     updatedRow = PlayerCurrentRow + 1;
                     if (updatedRow > MapSize[size] - 1)
                         updatedRow = 0;
-                    return CheckIfWumpasDead();
-                case "w":
+                    return CheckIfWumpasDead(PlayerCurrentCol, updatedRow);
+                case "4":
                     int updatedCol = PlayerCurrentCol - 1;
                     if (updatedCol < 0)
                         updatedCol = MapSize[size] - 1;
-                    return CheckIfWumpasDead();
-                case "e":
+                    return CheckIfWumpasDead(updatedCol, PlayerCurrentRow);
+                case "3":
                     updatedCol = PlayerCurrentCol + 1;
                     if (updatedCol < MapSize[size] - 1)
                         updatedCol = 0;
-                    return CheckIfWumpasDead();
+                    return CheckIfWumpasDead(updatedCol, PlayerCurrentRow);
                 default:
-                    return CheckIfWumpasDead();
+                    return CheckIfWumpasDead(PlayerCurrentCol, PlayerCurrentRow);
             }
 
         }
@@ -223,7 +222,7 @@ namespace HuntTheWumpus
             string direction = Console.ReadLine();
             switch (direction)
             {
-                case "n":
+                case "1":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
                     int updatedRow = PlayerCurrentRow - 1;
                     if (updatedRow < 0)
@@ -231,7 +230,7 @@ namespace HuntTheWumpus
                     newMap[PlayerCurrentCol, updatedRow].Player = true;
                     PlayerCurrentRow = updatedRow;
                     return CheckIfPlayerIsDead(size);
-                case "s":
+                case "2":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
                     updatedRow = PlayerCurrentRow + 1;
                     if (updatedRow > MapSize[size] - 1)
@@ -239,7 +238,7 @@ namespace HuntTheWumpus
                     newMap[PlayerCurrentCol, updatedRow].Player = true;
                     PlayerCurrentRow = updatedRow;
                     return CheckIfPlayerIsDead(size);
-                case "w":
+                case "4":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
                     int updatedCol = PlayerCurrentCol - 1;
                     if (updatedCol < 0)
@@ -247,7 +246,7 @@ namespace HuntTheWumpus
                     newMap[updatedCol, PlayerCurrentRow].Player = true;
                     PlayerCurrentCol = updatedCol;
                     return CheckIfPlayerIsDead(size);
-                case "e":
+                case "3":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
                     updatedCol = PlayerCurrentCol + 1;
                     if (updatedCol > MapSize[size] - 1)
@@ -271,9 +270,9 @@ namespace HuntTheWumpus
             else
                 return 0;
         }
-        public static int CheckIfWumpasDead()
+        public static int CheckIfWumpasDead(int updateCol, int updatedRow)
         {
-            if (newMap[PlayerCurrentCol, PlayerCurrentRow].Wampus == true)
+            if (newMap[updateCol, updatedRow].Wampus == true)
             {
                 Console.WriteLine("You shot Wumpas dead in the head, you win!!");
                 return 100;

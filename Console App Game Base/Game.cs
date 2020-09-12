@@ -53,11 +53,11 @@ namespace HuntTheWumpus
             switch (ActionInput)
             {
                 case "1":
-                    MoveShootMenu();
+                    MoveMenu();
                     GameState = Map.Move(size);
                     break;
                 case "2":
-                    MoveShootMenu();
+                    ShootMenu();
                     GameState = Map.Shoot(size);
                     break;
                 default:
@@ -66,12 +66,19 @@ namespace HuntTheWumpus
                     break;
             }
         }
-        public static void MoveShootMenu()
+        public static void MoveMenu()
         {
-            Console.WriteLine("n: Move up" +
-                "\ns: Move down" +
-                "\ne: Move right" +
-                "\nw: Move left");
+            Console.WriteLine("1: Move up" +
+                "\n2: Move down" +
+                "\n3: Move right" +
+                "\n4: Move left");
+        }
+        public static void ShootMenu()
+        {
+            Console.WriteLine("1: Shoot above" +
+                "\n2: Shoot below" +
+                "\n3: shoot right" +
+                "\n4: shoot left");
         }
 
     }
