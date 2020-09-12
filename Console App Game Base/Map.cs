@@ -149,16 +149,18 @@ namespace HuntTheWumpus
                 newRow = MapSize[size] - 1;
             newMap[col, newRow].Draft = true;
         }
-        public static void printINFO(string size)
+        public static void addINFO(string size)
         {
-            Console.Clear();
-            printCaverns(size);
             for (int i = 0; i < MapSize[size]; i++)
             {
                 for (int j = 0; j < MapSize[size]; j++)
                 {
-                    if (newMap[j, i].Wumpus == true )
+                    if (newMap[j, i].Wumpus == true)
                         MapInfo.Add($"Wumpus: [{newMap[j, i].Column},{newMap[j, i].Row}]");
+                    if (newMap[j, i].Blood == true)
+                        MapInfo.Add($"Blood: [{newMap[j, i].Column},{newMap[j, i].Row}]");
+                    if (newMap[j, i].Draft == true)
+                        MapInfo.Add($"Draft: [{newMap[j, i].Column},{newMap[j, i].Row}]");
                     if (newMap[j, i].Pit == true)
                         MapInfo.Add($"Pit: [{newMap[j, i].Column},{newMap[j, i].Row}]");
                     if (newMap[j, i].Bats == true)
@@ -167,6 +169,12 @@ namespace HuntTheWumpus
                         MapInfo.Add($"Player: [{newMap[j, i].Column},{newMap[j, i].Row}]");
                 }
             }
+        }
+        public static void printINFO(string size)
+        {
+            Console.Clear();
+            printCaverns(size);
+            
             MapInfo.Sort();
             foreach (var item in MapInfo)
                 Console.WriteLine(item);
@@ -178,8 +186,9 @@ namespace HuntTheWumpus
             {
                 for (int j = 0; j < MapSize[size]; j++)
                 {
-                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]");
+                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]   ");
                 }
+                Console.WriteLine();
                 Console.WriteLine();
             }
             Console.WriteLine();
@@ -195,9 +204,11 @@ namespace HuntTheWumpus
                 populatePits(size);
             for (int i = 0; i < numberOfBats; i++)
                 populateBats(size);
+            addINFO(size);
         }
         public static int Shoot(string size)
         {
+            Console.WriteLine();
             string direction = Console.ReadLine();
             switch (direction)
             {
@@ -222,7 +233,8 @@ namespace HuntTheWumpus
                         updatedCol = 0;
                     return CheckIfWumpusDead(updatedCol, PlayerCurrentRow);
                 default:
-                    return CheckIfWumpusDead(PlayerCurrentCol, PlayerCurrentRow);
+                    Game.Update();
+                    return 0;
             }
 
         }

@@ -21,7 +21,7 @@ namespace HuntTheWumpus
 
         public static void Menu()
         {
-            Console.WriteLine("Welcome to Hunt the Wumpus!");
+            Console.WriteLine("Welcome to Hunt the Wumpus!\n");
             Console.WriteLine("Please select the size of the map: " +
                 "\n1: small" +
                 "\n2: medium" +
@@ -54,8 +54,9 @@ namespace HuntTheWumpus
             Console.WriteLine("Please choose your action: ");
             Console.WriteLine("1: Move " +
                 "\n2: Shoot" +
-                "\n3: print info");
+                "\n3: print info\n");
             string ActionInput = Console.ReadLine();
+            Console.WriteLine();
             switch (ActionInput)
             {
                 case "1":
@@ -83,14 +84,14 @@ namespace HuntTheWumpus
             Console.WriteLine("1: Move up" +
                 "\n2: Move down" +
                 "\n3: Move right" +
-                "\n4: Move left");
+                "\n4: Move left\n");
         }
         public static void ShootMenu()
         {
             Console.WriteLine("1: Shoot above" +
                 "\n2: Shoot below" +
                 "\n3: shoot right" +
-                "\n4: shoot left");
+                "\n4: shoot left\n");
         }
 
     }
