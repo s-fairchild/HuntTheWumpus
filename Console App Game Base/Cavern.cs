@@ -11,7 +11,7 @@ namespace HuntTheWumpus
     {
         public bool Pit { get; set; }
         public bool Bats { get; set; }
-        public bool Wampus { get; set; }
+        public bool Wumpus { get; set; }
         public bool Player { get; set; }
         public bool Blood { get; set; }
         public bool Draft { get; set; }
@@ -23,7 +23,7 @@ namespace HuntTheWumpus
         {
             Pit = false;
             Bats = false;
-            Wampus = false;
+            Wumpus = false;
             Player = false;
             Blood = false;
             Draft = false;

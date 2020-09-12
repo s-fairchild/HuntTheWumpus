@@ -63,7 +63,7 @@ namespace HuntTheWumpus
             int col = Loc.Next(MapSize[size]);
             int row = Loc.Next(MapSize[size]);
 
-            newMap[col, row].Wampus = true;
+            newMap[col, row].Wumpus = true;
             newMap[col, row].Occupied = true;
             populateBlood(col, row, size);
         }
@@ -156,7 +156,7 @@ namespace HuntTheWumpus
                 {
                     if (newMap[j, i].Occupied == true | newMap[j, i].Blood == true | newMap[j,i].Draft == true | newMap[j, i].Bats == true)
                     {
-                        Console.WriteLine($"[{newMap[j, i].Column},{newMap[j, i].Row}]\nwumpus: {newMap[j, i].Wampus}\nplayer: {newMap[j, i].Player}\npit: {newMap[j, i].Pit}\nblood: {newMap[j, i].Blood}\ndraft: {newMap[j, i].Draft}\nbats: {newMap[j, i].Bats}");
+                        Console.WriteLine($"[{newMap[j, i].Column},{newMap[j, i].Row}]\nwumpus: {newMap[j, i].Wumpus}\nplayer: {newMap[j, i].Player}\npit: {newMap[j, i].Pit}\nblood: {newMap[j, i].Blood}\ndraft: {newMap[j, i].Draft}\nbats: {newMap[j, i].Bats}");
                         Console.WriteLine();
                     }
                 }
@@ -261,7 +261,7 @@ namespace HuntTheWumpus
         
         public static int CheckIfPlayerIsDead(string size)
         {
-            if (newMap[PlayerCurrentCol, PlayerCurrentRow].Wampus == true)
+            if (newMap[PlayerCurrentCol, PlayerCurrentRow].Wumpus == true)
                 return WumpusEatsYou();
             else if (newMap[PlayerCurrentCol, PlayerCurrentRow].Pit == true)
                 return FallInToPit();
@@ -272,7 +272,7 @@ namespace HuntTheWumpus
         }
         public static int CheckIfWumpasDead(int updateCol, int updatedRow)
         {
-            if (newMap[updateCol, updatedRow].Wampus == true)
+            if (newMap[updateCol, updatedRow].Wumpus == true)
             {
                 Console.WriteLine("You shot Wumpas dead in the head, you win!!");
                 return 100;
