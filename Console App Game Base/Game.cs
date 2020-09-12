@@ -44,7 +44,7 @@ namespace HuntTheWumpus
             Console.Clear();
             Map.printCaverns(size);
             Console.WriteLine($"You were in cavern: {PlayerPreviousLocation}");
-            Console.WriteLine($"you're in Cavern: {Map.PlayerCurrentLoc()}");
+            Console.WriteLine($"You're in Cavern: {Map.PlayerCurrentLoc()}");
             PlayerPreviousLocation = Map.PlayerCurrentLoc();
             Console.Write($"{Map.CheckBlood()}\n{Map.CheckDraft()}\n");
             Map.CheckBats(size);
@@ -54,7 +54,7 @@ namespace HuntTheWumpus
             Console.WriteLine("Please choose your action: ");
             Console.WriteLine("1: Move " +
                 "\n2: Shoot" +
-                "\n3: print info\n");
+                "\n3: Print info\n");
             string ActionInput = Console.ReadLine();
             Console.WriteLine();
             switch (ActionInput)
