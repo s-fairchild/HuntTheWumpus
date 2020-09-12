@@ -186,7 +186,12 @@ namespace HuntTheWumpus
             {
                 for (int j = 0; j < MapSize[size]; j++)
                 {
-                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]   ");
+                    if (newMap[j,i].Player==true)
+                    {
+                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]  ");
+                    }
+                    else
+                        Console.Write($" {newMap[j, i].Column},{newMap[j, i].Row}   ");
                 }
                 Console.WriteLine();
                 Console.WriteLine();
@@ -283,7 +288,8 @@ namespace HuntTheWumpus
                     PlayerCurrentCol = updatedCol;
                     return CheckIfCavernIsOccupied(size);
                 default:
-                    return CheckIfCavernIsOccupied(size);
+                    Game.Update();
+                    return 0;
             }
         }
         

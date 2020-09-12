@@ -47,7 +47,7 @@ namespace HuntTheWumpus
             Console.WriteLine($"You're in Cavern: {Map.PlayerCurrentLoc()}");
             PlayerPreviousLocation = Map.PlayerCurrentLoc();
             Console.Write($"{Map.CheckBlood()}\n{Map.CheckDraft()}\n");
-            Map.CheckBats(size);
+            GameState = Map.CheckBats(size);
         }
         public static void Action()
         {
