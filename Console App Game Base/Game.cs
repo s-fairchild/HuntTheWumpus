@@ -54,7 +54,7 @@ namespace HuntTheWumpus
             Console.WriteLine("Please choose your action: ");
             Console.WriteLine("1: Move " +
                 "\n2: Shoot" +
-                "\n3: Print info\n");
+                "\n3: Cheat\n");
             string ActionInput = Console.ReadLine();
             Console.WriteLine();
             switch (ActionInput)
