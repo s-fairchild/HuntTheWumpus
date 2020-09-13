@@ -27,7 +27,7 @@ namespace HuntTheWumpus
                 "\n2: medium" +
                 "\n3: large");
             string input = Console.ReadLine();
-            Game.size = MapSize[int.Parse(input)];
+            size = MapSize[int.Parse(input)];
         }
         public static void Play()
         {
@@ -54,7 +54,8 @@ namespace HuntTheWumpus
             Console.WriteLine("Please choose your action: ");
             Console.WriteLine("1: Move " +
                 "\n2: Shoot" +
-                "\n3: Cheat\n");
+                "\n3: Note" +
+                "\n4: Cheat");
             string ActionInput = Console.ReadLine();
             Console.WriteLine();
             switch (ActionInput)
@@ -68,7 +69,13 @@ namespace HuntTheWumpus
                     GameState = Map.Shoot(size);
                     break;
                 case "3":
-                    Map.printINFO(size);
+                    Map.Note(size);
+                    Console.WriteLine("enter any charater to get back in action");
+                    Console.ReadLine();
+                    Update();
+                    break;
+                case "4":
+                    Map.Cheat(size);
                     Console.WriteLine("enter any charater to get back in action");
                     Console.ReadLine();
                     Update();
