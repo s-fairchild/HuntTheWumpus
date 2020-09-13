@@ -161,9 +161,9 @@ namespace HuntTheWumpus
                     if (newMap[j, i].Wumpus == true)
                         MapInfo.Add($"Wumpus: [{newMap[j, i].Column},{newMap[j, i].Row}]");
                     if (newMap[j, i].Blood == true)
-                        MapInfo.Add($"Blood: [{newMap[j, i].Column},{newMap[j, i].Row}]");
+                        MapInfo.Add($"Blood: {newMap[j, i].Column},{newMap[j, i].Row}");
                     if (newMap[j, i].Draft == true)
-                        MapInfo.Add($"Draft: [{newMap[j, i].Column},{newMap[j, i].Row}]");
+                        MapInfo.Add($"Draft: {newMap[j, i].Column},{newMap[j, i].Row}");
                     if (newMap[j, i].Pit == true)
                         MapInfo.Add($"Pit: [{newMap[j, i].Column},{newMap[j, i].Row}]");
                     if (newMap[j, i].Bats == true)
@@ -181,7 +181,7 @@ namespace HuntTheWumpus
             else
             {
                 Console.Clear();
-                printCaverns(size);
+                printNoteCavern(size);
                 VisitedPointOfInterest.Sort();
                 foreach (var item in VisitedPointOfInterest)
                     Console.WriteLine(item);
@@ -191,7 +191,7 @@ namespace HuntTheWumpus
         public static void Cheat(string size)
         {
             Console.Clear();
-            printCaverns(size);
+            printCheatedCavern(size);
             MapInfo.Sort();
             foreach (var item in MapInfo)
                 Console.WriteLine(item);
@@ -207,6 +207,53 @@ namespace HuntTheWumpus
                     {
                         Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]  ");
                     }
+                    else
+                        Console.Write($" {newMap[j, i].Column},{newMap[j, i].Row}   ");
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+        public static void printNoteCavern(string size)
+        {
+            for (int i = 0; i < MapSize[size]; i++)
+            {
+                for (int j = 0; j < MapSize[size]; j++)
+                {
+                    if (newMap[j, i].Visited == true)
+                    {
+                        if (newMap[j, i].Bats == true)
+                            Console.Write($"#{newMap[j, i].Column},{newMap[j, i].Row}#  ");
+                        if (newMap[j, i].Blood == true & newMap[j, i].Draft == true)
+                            Console.Write($"^{newMap[j, i].Column},{newMap[j, i].Row}^  ");
+                        else if (newMap[j, i].Blood == true)
+                            Console.Write($"+{newMap[j, i].Column},{newMap[j, i].Row}+  ");
+                        else if (newMap[j, i].Draft == true)
+                            Console.Write($"-{newMap[j, i].Column},{newMap[j, i].Row}-  ");
+                    }
+                    else
+                        Console.Write($" {newMap[j, i].Column},{newMap[j, i].Row}   ");
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
+        public static void printCheatedCavern(string size)
+        {
+            for (int i = 0; i < MapSize[size]; i++)
+            {
+                for (int j = 0; j < MapSize[size]; j++)
+                {
+                    if (newMap[j, i].Player == true)
+                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]  ");
+                    else if(newMap[j, i].Wumpus == true)
+                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]  ");
+                    else if(newMap[j, i].Pit == true)
+                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]  ");
+                    else if(newMap[j, i].Bats == true)
+                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]  ");
                     else
                         Console.Write($" {newMap[j, i].Column},{newMap[j, i].Row}   ");
                 }
@@ -391,22 +438,46 @@ namespace HuntTheWumpus
         {
             return PlayerLocation = $"[{PlayerCurrentCol},{PlayerCurrentRow}]";
         }
+        public static string CheckBloodAndDraft()
+        {
+            if (newMap[PlayerCurrentCol, PlayerCurrentRow].Draft == true & newMap[PlayerCurrentCol, PlayerCurrentRow].Blood == true)
+            {
+                if (newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                {
+                    VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Draft");
+                    VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Blood");
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                }
+                return "\nYou detected both blood and draft in this cavern";
+            }
+            else
+                return null;
+        }
         public static string CheckBlood()
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Blood == true)
             {
-                VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Blood");
+                if(newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                {
+                    VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Blood");
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                }
                 return "You see blood in this cavern";
 
             }
             else
                 return null;
         }
+        
         public static string CheckDraft()
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Draft == true)
             {
-                VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol,PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Draft");
+                if (newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                {
+                    VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Draft");
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                }
                 return "\nYou detected draft in this cavern";
             }
             else
@@ -416,7 +487,11 @@ namespace HuntTheWumpus
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Bats == true)
             {
-                VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Bats");
+                if (newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                {
+                    VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Bats");
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                }
                 Console.WriteLine("You walked in to a group of bats");
                 return BatsCarry(size);
             }

@@ -18,6 +18,7 @@ namespace HuntTheWumpus
         public int Column { get; set; }
         public int Row { get; set; }
         public bool Occupied { get; set; }
+        public bool Visited { get; set; }
         
         public Cavern(int clmn, int r)
         {
@@ -30,6 +31,7 @@ namespace HuntTheWumpus
             Column = clmn;
             Row = r;
             Occupied = false;
+            Visited = false;
         }
         
 
