@@ -42,24 +42,22 @@ namespace HuntTheWumpus
         public static string PlayerPreviousLocation = "";
         public static void Update()
         {
-            
             Console.Clear();
             Map.printCaverns(size);
-            Console.WriteLine($"==========================\nYou were in cavern: {PlayerPreviousLocation}\n==========================");
-            Console.WriteLine($"You're in Cavern: {Map.PlayerCurrentLoc()}\n==========================");
+            Console.WriteLine($"==========================\nYou were in cavern: {PlayerPreviousLocation}");
+            Console.WriteLine($"You are in Cavern:  {Map.PlayerCurrentLoc()}\n==========================");
                 PlayerPreviousLocation = Map.PlayerCurrentLoc();
-            Console.Write($"{Map.CheckBloodAndDraft()}\n{Map.CheckBlood()}\n{Map.CheckDraft()}\n");
-            GameState = Map.CheckBats(size);
+            Map.checkCavern(size);
         }
         public static void Action()
         {
-            Console.WriteLine("Please choose your action: \n-------------------------");
+            Console.WriteLine("Please choose your action: \n--------------------------");
             Console.WriteLine("1: Move " +
                 "\n2: Shoot" +
                 "\n3: Note" +
                 "\n4: Trace" +
                 "\n5: Cheat" +
-                "\n-------------------------");
+                "\n--------------------------");
             string ActionInput = Console.ReadLine();
             Console.WriteLine();
             switch (ActionInput)
@@ -92,13 +90,13 @@ namespace HuntTheWumpus
                     break;
                 default:
                     Console.Clear();
-                    Action();
+                    Update();
                     break;
             }
         }
         public static void MoveMenu()
         {
-            Console.WriteLine("Please CHoose your direction: \n-------------------------" +
+            Console.WriteLine("Please Choose your direction: \n-------------------------" +
                 "\n1: Move up" +
                 "\n2: Move down" +
                 "\n3: Move right" +
@@ -114,6 +112,5 @@ namespace HuntTheWumpus
                 "\n4: shoot left" +
                 "\n-------------------------");
         }
-
     }
 }
