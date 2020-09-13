@@ -21,8 +21,10 @@ namespace HuntTheWumpus
 
         public static void Menu()
         {
-            Console.WriteLine("Welcome to Hunt the Wumpus!\n");
+            
+            Console.WriteLine("===========================\nWelcome to Hunt the Wumpus!\n===========================\n");
             Console.WriteLine("Please select the size of the map: " +
+                "\n----------------------------------" +
                 "\n1: small" +
                 "\n2: medium" +
                 "\n3: large");
@@ -43,19 +45,21 @@ namespace HuntTheWumpus
             
             Console.Clear();
             Map.printCaverns(size);
-            Console.WriteLine($"You were in cavern: {PlayerPreviousLocation}");
-            Console.WriteLine($"You're in Cavern: {Map.PlayerCurrentLoc()}");
-            PlayerPreviousLocation = Map.PlayerCurrentLoc();
+            Console.WriteLine($"==========================\nYou were in cavern: {PlayerPreviousLocation}\n==========================");
+            Console.WriteLine($"You're in Cavern: {Map.PlayerCurrentLoc()}\n==========================");
+                PlayerPreviousLocation = Map.PlayerCurrentLoc();
             Console.Write($"{Map.CheckBloodAndDraft()}\n{Map.CheckBlood()}\n{Map.CheckDraft()}\n");
             GameState = Map.CheckBats(size);
         }
         public static void Action()
         {
-            Console.WriteLine("Please choose your action: ");
+            Console.WriteLine("Please choose your action: \n-------------------------");
             Console.WriteLine("1: Move " +
                 "\n2: Shoot" +
                 "\n3: Note" +
-                "\n4: Cheat");
+                "\n4: Trace" +
+                "\n5: Cheat" +
+                "\n-------------------------");
             string ActionInput = Console.ReadLine();
             Console.WriteLine();
             switch (ActionInput)
@@ -75,6 +79,12 @@ namespace HuntTheWumpus
                     Update();
                     break;
                 case "4":
+                    Map.Trace(size);
+                    Console.WriteLine("enter any charater to get back in action");
+                    Console.ReadLine();
+                    Update();
+                    break;
+                case "5":
                     Map.Cheat(size);
                     Console.WriteLine("enter any charater to get back in action");
                     Console.ReadLine();
@@ -88,17 +98,21 @@ namespace HuntTheWumpus
         }
         public static void MoveMenu()
         {
-            Console.WriteLine("1: Move up" +
+            Console.WriteLine("Please CHoose your direction: \n-------------------------" +
+                "\n1: Move up" +
                 "\n2: Move down" +
                 "\n3: Move right" +
-                "\n4: Move left\n");
+                "\n4: Move left" +
+                "\n-------------------------");
         }
         public static void ShootMenu()
         {
-            Console.WriteLine("1: Shoot above" +
+            Console.WriteLine("Please CHoose your direction: \n-------------------------" +
+                "\n1: Shoot above" +
                 "\n2: Shoot below" +
                 "\n3: shoot right" +
-                "\n4: shoot left\n");
+                "\n4: shoot left" +
+                "\n-------------------------");
         }
 
     }

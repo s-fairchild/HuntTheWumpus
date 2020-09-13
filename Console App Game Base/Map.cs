@@ -20,6 +20,8 @@ namespace HuntTheWumpus
 
         public static List<string> VisitedPointOfInterest = new List<string>();
 
+        public static Queue<string> VisitedTrace = new Queue<string>();
+
         public static string PlayerLocation; 
         
         static int numberOfPits = 0;
@@ -57,9 +59,7 @@ namespace HuntTheWumpus
             for (int i = 0; i < MapSize[size]; i++)
             {
                 for (int j = 0; j < MapSize[size]; j++)
-                {
                     newMap[j,i] = new Cavern(j, i);
-                }
             }            
         }
         public static void assignWumpus(string size)
@@ -82,6 +82,8 @@ namespace HuntTheWumpus
                 newMap[col, row].Occupied = true;
                 PlayerCurrentCol = col;
                 PlayerCurrentRow = row;
+                newMap[col, row].VisitedTrace = true;
+                VisitedTrace.Enqueue($"[{newMap[col, row].Column},{newMap[col, row].Row}]");
             }
             else
                 populatePlayer(size);
@@ -173,9 +175,18 @@ namespace HuntTheWumpus
                 }
             }
         }
+        public static void Trace(string size)
+        {
+            Console.Clear();
+            printTraceCaverns(size);
+            foreach (var item in VisitedTrace)
+                Console.Write(item);
+            Console.WriteLine();
+            Console.WriteLine();
+
+        }
         public static void Note(string size)
         {
-           
             if(VisitedPointOfInterest.Count==0)
                 Console.WriteLine("No hints available");
             else
@@ -215,13 +226,31 @@ namespace HuntTheWumpus
             }
             Console.WriteLine();
         }
+        public static void printTraceCaverns(string size)
+        {
+            for (int i = 0; i < MapSize[size]; i++)
+            {
+                for (int j = 0; j < MapSize[size]; j++)
+                {
+                    if (newMap[j, i].VisitedTrace == true)
+                    {
+                        Console.Write($"[{newMap[j, i].Column},{newMap[j, i].Row}]  ");
+                    }
+                    else
+                        Console.Write($" {newMap[j, i].Column},{newMap[j, i].Row}   ");
+                }
+                Console.WriteLine();
+                Console.WriteLine();
+            }
+            Console.WriteLine();
+        }
         public static void printNoteCavern(string size)
         {
             for (int i = 0; i < MapSize[size]; i++)
             {
                 for (int j = 0; j < MapSize[size]; j++)
                 {
-                    if (newMap[j, i].Visited == true)
+                    if (newMap[j, i].VisitedHint == true)
                     {
                         if (newMap[j, i].Bats == true)
                             Console.Write($"#{newMap[j, i].Column},{newMap[j, i].Row}#  ");
@@ -305,7 +334,6 @@ namespace HuntTheWumpus
                     Game.Update();
                     return 0;
             }
-
         }
         public static int Move(string size)
         {
@@ -320,6 +348,8 @@ namespace HuntTheWumpus
                         updatedRow = MapSize[size] - 1;
                     newMap[PlayerCurrentCol, updatedRow].Player = true;
                     PlayerCurrentRow = updatedRow;
+                    VisitedTrace.Enqueue($"[{newMap[PlayerCurrentCol, updatedRow].Column},{newMap[PlayerCurrentCol, updatedRow].Row}]");
+                    newMap[PlayerCurrentCol, updatedRow].VisitedTrace = true;
                     return CheckIfCavernIsOccupied();
                 case "2":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
@@ -330,6 +360,8 @@ namespace HuntTheWumpus
                         updatedRow = 0;
                     newMap[PlayerCurrentCol, updatedRow].Player = true;
                     PlayerCurrentRow = updatedRow;
+                    VisitedTrace.Enqueue($"[{newMap[PlayerCurrentCol, updatedRow].Column},{newMap[PlayerCurrentCol, updatedRow].Row}]");
+                    newMap[PlayerCurrentCol, updatedRow].VisitedTrace = true;
                     return CheckIfCavernIsOccupied();
                 case "4":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
@@ -340,6 +372,8 @@ namespace HuntTheWumpus
                         updatedCol = MapSize[size] - 1;
                     newMap[updatedCol, PlayerCurrentRow].Player = true;
                     PlayerCurrentCol = updatedCol;
+                    VisitedTrace.Enqueue($"[{newMap[updatedCol, PlayerCurrentRow].Column},{newMap[updatedCol, PlayerCurrentRow].Row}]");
+                    newMap[updatedCol, PlayerCurrentRow].VisitedTrace = true;
                     return CheckIfCavernIsOccupied();
                 case "3":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
@@ -350,6 +384,8 @@ namespace HuntTheWumpus
                         updatedCol = 0;
                     newMap[updatedCol, PlayerCurrentRow].Player = true;
                     PlayerCurrentCol = updatedCol;
+                    VisitedTrace.Enqueue($"[{newMap[updatedCol, PlayerCurrentRow].Column},{newMap[updatedCol, PlayerCurrentRow].Row}]");
+                    newMap[updatedCol, PlayerCurrentRow].VisitedTrace = true;
                     return CheckIfCavernIsOccupied();
                 default:
                     Game.Update();
@@ -442,11 +478,11 @@ namespace HuntTheWumpus
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Draft == true & newMap[PlayerCurrentCol, PlayerCurrentRow].Blood == true)
             {
-                if (newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                if (newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint != true)
                 {
                     VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Draft");
                     VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Blood");
-                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint = true;
                 }
                 return "\nYou detected both blood and draft in this cavern";
             }
@@ -457,10 +493,10 @@ namespace HuntTheWumpus
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Blood == true)
             {
-                if(newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                if(newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint != true)
                 {
                     VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Blood");
-                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint = true;
                 }
                 return "You see blood in this cavern";
 
@@ -473,10 +509,10 @@ namespace HuntTheWumpus
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Draft == true)
             {
-                if (newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                if (newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint != true)
                 {
                     VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Draft");
-                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint = true;
                 }
                 return "\nYou detected draft in this cavern";
             }
@@ -487,10 +523,10 @@ namespace HuntTheWumpus
         {
             if (newMap[PlayerCurrentCol, PlayerCurrentRow].Bats == true)
             {
-                if (newMap[PlayerCurrentCol, PlayerCurrentRow].Visited != true)
+                if (newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint != true)
                 {
                     VisitedPointOfInterest.Add($"[{newMap[PlayerCurrentCol, PlayerCurrentRow].Column},{newMap[PlayerCurrentCol, PlayerCurrentRow].Row}]: Bats");
-                    newMap[PlayerCurrentCol, PlayerCurrentRow].Visited = true;
+                    newMap[PlayerCurrentCol, PlayerCurrentRow].VisitedHint = true;
                 }
                 Console.WriteLine("You walked in to a group of bats");
                 return BatsCarry(size);
