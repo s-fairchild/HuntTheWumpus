@@ -11,7 +11,7 @@ namespace HuntTheWumpus
         static void Main(string[] args)
         {
             Game.Menu();
-            Map.Initialize(Game.size);
+            Map.InitializeMap(Game.size);
             Game.Play();
         }
     }

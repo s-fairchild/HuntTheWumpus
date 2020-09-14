@@ -16,9 +16,12 @@ namespace HuntTheWumpus
             {3, "large"}
         };
         public static string size = "";
-
+        //Game state is evaluated in Play method. 
         static int GameState = 0;
 
+        public static string PlayerPreviousLocation = "";
+
+        //Menu method provides the player 3 options of map size to choose from. 
         public static void Menu()
         {
             
@@ -31,6 +34,8 @@ namespace HuntTheWumpus
             string input = Console.ReadLine();
             size = MapSize[int.Parse(input)];
         }
+
+        //This is where the game runs, if GameState is 0, the while loop of play will continue. 
         public static void Play()
         {
             do
@@ -39,16 +44,19 @@ namespace HuntTheWumpus
                 Action();
             } while (GameState == 0);
         }
-        public static string PlayerPreviousLocation = "";
+
+        //Update method clears the screen, and prints the map with player's location in square bracket. 
+        //It also prints player's previous location
         public static void Update()
         {
             Console.Clear();
-            Map.printCaverns(size);
-            Console.WriteLine($"==========================\nYou were in cavern: {PlayerPreviousLocation}");
+            Map.PrintCaverns(size);
+            Console.WriteLine($"==========================\nYou were in cavern: {Map.PlayerPreviousLoc()}");
+            Map.CheckCavern(size);
             Console.WriteLine($"You are in Cavern:  {Map.PlayerCurrentLoc()}\n==========================");
-                PlayerPreviousLocation = Map.PlayerCurrentLoc();
-            Map.checkCavern(size);
+            //PlayerPreviousLocation = Map.PlayerCurrentLoc();
         }
+        //Action takes user input to perform an action. 
         public static void Action()
         {
             Console.WriteLine("Please choose your action: \n--------------------------");
@@ -94,6 +102,7 @@ namespace HuntTheWumpus
                     break;
             }
         }
+        //When you choose to move you invoke MoveMenu method first to show you the direction options.
         public static void MoveMenu()
         {
             Console.WriteLine("Please Choose your direction: \n-------------------------" +
@@ -103,6 +112,7 @@ namespace HuntTheWumpus
                 "\n4: Move left" +
                 "\n-------------------------");
         }
+        //When you choose to shoot you invoke ShootMenu method first to show you the direction options.
         public static void ShootMenu()
         {
             Console.WriteLine("Please CHoose your direction: \n-------------------------" +
