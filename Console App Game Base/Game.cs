@@ -18,6 +18,7 @@ namespace HuntTheWumpus
         public static string size = "";
         //Game state is evaluated in Play method. 
         static int GameState = 0;
+        public static int move = 0;
 
         public static string PlayerPreviousLocation = "";
 
@@ -51,7 +52,8 @@ namespace HuntTheWumpus
         {
             Console.Clear();
             Map.PrintCaverns(size);
-            Console.WriteLine($"==========================\nYou were in cavern: {Map.PlayerPreviousLoc()}");
+            if(move != 0)
+                Console.WriteLine($"==========================\nYou were in cavern: {Map.PlayerPreviousLoc()}");
             Map.CheckCavern(size);
             Console.WriteLine($"You are in Cavern:  {Map.PlayerCurrentLoc()}\n==========================");
             //PlayerPreviousLocation = Map.PlayerCurrentLoc();
@@ -59,6 +61,7 @@ namespace HuntTheWumpus
         //Action takes user input to perform an action. 
         public static void Action()
         {
+            
             Console.WriteLine("Please choose your action: \n--------------------------");
             Console.WriteLine("1: Move " +
                 "\n2: Shoot" +

@@ -21,8 +21,8 @@ namespace HuntTheWumpus
         static int PlayerCurrentCol = 0;
         static int PlayerCurrentRow = 0;
 
-        static int PlayerPreviousCol = 0;
-        static int PlayerPreviousRow = 0;
+        static int PlayerPreviousCol;
+        static int PlayerPreviousRow;
 
         //**Methods and statements in below section help setup the game.** 
 
@@ -231,6 +231,7 @@ namespace HuntTheWumpus
                     PlayerCurrentRow = updatedRow;
                     VisitedTrace.Enqueue($"[{newMap[PlayerCurrentCol, updatedRow].Column},{newMap[PlayerCurrentCol, updatedRow].Row}]");
                     newMap[PlayerCurrentCol, updatedRow].VisitedTrace = true;
+                    Game.move++;
                     return CheckIfCavernIsOccupied(size);
                 case "2":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
@@ -242,6 +243,7 @@ namespace HuntTheWumpus
                     PlayerCurrentRow = updatedRow;
                     VisitedTrace.Enqueue($"[{newMap[PlayerCurrentCol, updatedRow].Column},{newMap[PlayerCurrentCol, updatedRow].Row}]");
                     newMap[PlayerCurrentCol, updatedRow].VisitedTrace = true;
+                    Game.move++;
                     return CheckIfCavernIsOccupied(size);
                 case "4":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
@@ -253,6 +255,7 @@ namespace HuntTheWumpus
                     PlayerCurrentCol = updatedCol;
                     VisitedTrace.Enqueue($"[{newMap[updatedCol, PlayerCurrentRow].Column},{newMap[updatedCol, PlayerCurrentRow].Row}]");
                     newMap[updatedCol, PlayerCurrentRow].VisitedTrace = true;
+                    Game.move++;
                     return CheckIfCavernIsOccupied(size);
                 case "3":
                     newMap[PlayerCurrentCol, PlayerCurrentRow].Player = false;
@@ -264,6 +267,7 @@ namespace HuntTheWumpus
                     PlayerCurrentCol = updatedCol;
                     VisitedTrace.Enqueue($"[{newMap[updatedCol, PlayerCurrentRow].Column},{newMap[updatedCol, PlayerCurrentRow].Row}]");
                     newMap[updatedCol, PlayerCurrentRow].VisitedTrace = true;
+                    Game.move++;
                     return CheckIfCavernIsOccupied(size);
                 default:
                     Game.Update();
